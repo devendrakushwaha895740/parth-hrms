@@ -1,0 +1,13 @@
+@using SampleHrms.Web.ViewModels
+@{ ViewData["Title"] = "Dashboard"; ViewData["AgentPage"] = "dashboard"; var role = (string)ViewBag.Role; }
+<h2 data-agent-id="dashboard-title">Dashboard</h2>
+<p>Signed in as <strong>@role</strong>.</p>
+@if (role == "Employee")
+{
+ <div class="row">
+  <div class="col-md-8"><h4>Leave balances</h4><table class="table" data-agent-id="dashboard-balances-table"><thead><tr><th>Type</th><th>Total</th><th>Used</th><th>Remaining</th></tr></thead><tbody>
+  @foreach (var b in (List<LeaveBalanceViewModel>)ViewBag.Balances) { <tr data-agent-id="balance-row-@b.LeaveType.ToLowerInvariant()"><td>@b.LeaveType</td><td>@b.Total</td><td>@b.Used</td><td>@b.Remaining</td></tr> }
+  </tbody></table></div>
+  <div class="col-md-4"><div class="card"><div class="card-body"><h5>Attendance records</h5><p class="display-6" data-agent-id="dashboard-attendance-count">@ViewBag.AttendanceCount</p></div></div></div>
+ </div>
+}

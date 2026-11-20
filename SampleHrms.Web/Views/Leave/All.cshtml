@@ -1,0 +1,6 @@
+@model IEnumerable<SampleHrms.Web.ViewModels.LeaveRequestViewModel>
+@{ ViewData["Title"] = "All leave"; ViewData["AgentPage"] = "leave-all"; }
+<h2 data-agent-id="leave-all-title">All leave requests</h2>
+<table class="table table-striped" data-agent-id="leave-all-table"><thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th><th>Comment</th></tr></thead><tbody>
+@foreach (var r in Model) { <tr data-agent-id="leave-all-row-@r.Id"><td>@r.EmployeeName</td><td>@r.LeaveType</td><td>@r.FromDate:d - @r.ToDate:d</td><td>@r.Days</td><td>@r.Status</td><td>@r.ReviewComment</td></tr> }
+</tbody></table>

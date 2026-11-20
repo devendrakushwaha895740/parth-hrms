@@ -1,0 +1,10 @@
+@model IEnumerable<SampleHrms.Web.ViewModels.LeaveRequestViewModel>
+@{ ViewData["Title"] = "Pending leave"; ViewData["AgentPage"] = "leave-pending"; }
+<h2 data-agent-id="leave-pending-title">Pending leave requests</h2>
+<table class="table" data-agent-id="leave-pending-table"><thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Reason</th><th>Action</th></tr></thead><tbody>
+@foreach (var r in Model) {
+<tr data-agent-id="leave-pending-row-@r.Id"><td>@r.EmployeeName</td><td>@r.LeaveType</td><td>@r.FromDate:d - @r.ToDate:d</td><td>@r.Days</td><td>@r.Reason</td><td>
+<form asp-action="Approve" method="post" class="d-inline"><input type="hidden" name="id" value="@r.Id" /><input name="comment" class="form-control form-control-sm d-inline w-auto" placeholder="Comment" data-agent-id="leave-approve-comment-@r.Id" /><button class="btn btn-sm btn-success" data-agent-id="leave-approve-@r.Id">Approve</button></form>
+<form asp-action="Reject" method="post" class="d-inline"><input type="hidden" name="id" value="@r.Id" /><input name="comment" class="form-control form-control-sm d-inline w-auto" placeholder="Comment" data-agent-id="leave-reject-comment-@r.Id" /><button class="btn btn-sm btn-danger" data-agent-id="leave-reject-@r.Id">Reject</button></form>
+</td></tr>}
+</tbody></table>

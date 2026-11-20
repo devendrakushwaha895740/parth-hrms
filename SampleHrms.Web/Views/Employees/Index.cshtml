@@ -1,0 +1,8 @@
+@model IEnumerable<SampleHrms.Web.ViewModels.EmployeeViewModel>
+@{ ViewData["Title"] = "Employees"; ViewData["AgentPage"] = "employees"; }
+<div class="d-flex justify-content-between"><h2 data-agent-id="employees-title">Employees</h2>@if (User.IsInRole("Admin")) { <a asp-action="Create" class="btn btn-primary" data-agent-id="employee-create-link">Create employee</a> }</div>
+<table class="table" data-agent-id="employees-table"><thead><tr><th>Name</th><th>Email</th><th>Code</th><th>Department</th><th>Role</th><th>Status</th><th></th></tr></thead><tbody>
+@foreach (var e in Model) { <tr data-agent-id="employee-row-@e.Id"><td>@e.FullName</td><td>@e.Email</td><td>@e.EmployeeCode</td><td>@e.Department</td><td>@e.Role</td><td>@(e.IsActive ? "Active" : "Inactive")</td><td>
+@if (User.IsInRole("Admin")) { <form asp-action="SetActive" method="post" class="d-inline"><input type="hidden" name="id" value="@e.Id" /><input type="hidden" name="isActive" value="@((!e.IsActive).ToString())" /><button class="btn btn-sm btn-outline-secondary" data-agent-id="employee-toggle-@e.Id">@(e.IsActive ? "Deactivate" : "Activate")</button></form> }
+</td></tr> }
+</tbody></table>

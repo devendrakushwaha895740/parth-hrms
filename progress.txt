@@ -1,0 +1,49 @@
+﻿= PROJECT STATUS =
+Created: 2026-11-20
+Step 1: Initializing solution and scaffolding
+= PROJECT STATUS =
+Updated: 2026-11-20
+Step 1 complete: solution and xUnit projects scaffolded; baseline build passed.
+Step 2 in progress: adding Identity, EF Core entities, DbContext, migration, seed data.
+
+Step 2 complete: EF Core SQLite migration and seed implementation added.
+Step 3 complete: Leave, Employee, and Attendance service implementations added.
+Step 4 in progress: controllers and Razor views with agent IDs.
+
+Step 4 complete: role pages, controllers, flash alerts, and stable agent IDs implemented.
+Step 5 in progress: focused LeaveService tests and README.
+
+Step 5 complete: 9 LeaveService xUnit tests pass and README/run instructions are included.
+Final verification complete: app started on http://127.0.0.1:5080; login redirect to /Dashboard verified for Admin, HR, and Employee demo accounts.
+
+2026-11-20 follow-up complete: Added authenticated-only floating assistant UI shell (orb, panel, public JS API); no AI/LLM logic included.
+Verification: dotnet build SampleHrms.sln succeeded with 0 warnings/errors. Browser verified authenticated dashboard and Apply page render the orb; drag snaps to edge and localStorage position restores after reload; chat echo, keyboard activation, acting state shrink, mobile bottom sheet, and unauthenticated asset exclusion passed.
+
+2026-11-21 Parth implementation:
+- Added ignored development OpenRouter settings with empty ApiKey/Model and committed-safe empty example structure.
+- Added provider abstraction, OpenRouter typed HttpClient, Claude/Gemini stubs, role-filtered tool catalog, SignalR hub/session store, confirmation broker, audit logging, rate limiter, and orchestrator.
+- Added self-approval protection and Source=AI propagation for UI form submissions.
+- Added local SignalR browser client, Parth title, client UI executor, confirmation UI, and page-load resume support.
+- Added tests for role filtering, self-approval, and fake-provider leave form tool sequence.
+- Final verification: `dotnet build .\SampleHrms.sln` succeeded with 0 warnings/errors; `dotnet test .\SampleHrms.sln` passed all 12 tests.
+- Runtime smoke test with empty OpenRouter configuration: one clear startup warning, authenticated Employee chat answered exactly `AI is not configured yet`; Admin, HR, and Employee demo logins succeeded and showed the assistant orb. Login page remained unauthenticated and had no orb.
+- Restored the orb's required accessible label `AI assistant`; Parth remains the chat panel title.
+
+2026-11-21 Parth voice UI:
+- Added Hindi/Hinglish and English (India) recognition selection, voice-mode persistence, browser speech input/output, mute, barge-in, confirmation phrase handling, and short-form TTS.
+- Added live canvas waveform, orb volume ring, speaking visuals, reduced-motion styling, and a minimized voice pill; microphone/audio resources are released when listening stops.
+- Updated README with Chrome/Edge, secure-origin, microphone permission, and internet requirements.
+- Verification: `dotnet build .\SampleHrms.sln` succeeded with 0 warnings/errors; all assistant JavaScript passed `node --check`. Chrome browser smoke test verified the interim transcript, live waveform pixels, first-two-sentence speech, and voice-mode auto-relisten with a mocked speech adapter. Native Chrome recognition returned a network error in this environment, so live spoken recognition could not be completed.
+
+2026-11-21 Parth voice echo-loop fix:
+- Enforced serialized voice turns with abort-before-TTS, late-result rejection, sentence chunking, watchdog recovery, 800 ms cooldown, echo/duplicate filters, and loop-pause behavior.
+- Fixed assistant-to-voice control wiring and passed typed-message source metadata; retained default-off voice interruption and Hold-to-talk.
+- Fixed the orb state transition so `speaking` cannot remain active alongside `listening`; README Voice tips already document speaker-safe use and Hold-to-talk.
+- Verification: all changed assistant scripts passed `node --check`; solution build passed with 0 warnings/errors using a temporary output directory because the app was already running and its default output was locked.
+- Mocked browser checks passed for four sequential speech chunks, delayed recognition rejection, watchdog recovery, 800 ms auto-relisten, Hold-to-talk via Space, and Escape interruption. A live microphone/speaker test was not performed; native Chrome recognition had previously failed with a network error in this environment.
+
+2026-11-21 Parth slow-response notice:
+- Added configurable per-task slow notices, model/language-based fixed templates, and an independent 429 notice sent before the existing retry.
+- Routed notices through StepLog, rendered transient notices as grey step lines, spoke them only in voice mode through the half-duplex path, and removed them when an assistant reply arrives.
+- Updated both development settings files and added a fake-slow-provider test for one notice per task and the disabled case.
+- Verification: focused slow-notice xUnit test passed; final solution build passed with 0 warnings/errors; changed assistant scripts passed `node --check`.

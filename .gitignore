@@ -1,0 +1,8 @@
+SampleHrms.Web/appsettings.Development.json
+SampleHrms.Web/bin/
+SampleHrms.Web/obj/
+SampleHrms.Web/hrms.db
+SampleHrms.Web/hrms.db-shm
+SampleHrms.Web/hrms.db-wal
+SampleHrms.Tests/bin/
+SampleHrms.Tests/obj/

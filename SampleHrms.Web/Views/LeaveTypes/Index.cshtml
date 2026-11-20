@@ -1,0 +1,14 @@
+@model IEnumerable<SampleHrms.Web.ViewModels.LeaveTypeViewModel>
+@{ ViewData["Title"] = "Leave types"; ViewData["AgentPage"] = "leave-types"; }
+<h2 data-agent-id="leave-types-title">Leave types</h2>
+<form asp-action="Create" method="post" class="row mb-4" data-agent-id="leave-type-create-form">
+ <div class="col-md-5"><input name="name" class="form-control" placeholder="Leave type name" data-agent-id="leave-type-name" /></div>
+ <div class="col-md-3"><input name="balance" type="number" min="0" class="form-control" placeholder="Yearly balance" data-agent-id="leave-type-balance" /></div>
+ <div class="col-md-2"><button class="btn btn-primary" data-agent-id="leave-type-create-submit">Create</button></div>
+</form>
+<table class="table" data-agent-id="leave-types-table"><thead><tr><th>Name</th><th>Balance</th><th>Status</th><th>Update</th><th></th></tr></thead><tbody>
+@foreach (var t in Model) {
+<tr data-agent-id="leave-type-row-@t.Id"><td>@t.Name</td><td>@t.DefaultYearlyBalance</td><td>@(t.IsActive ? "Active" : "Inactive")</td><td>
+<form asp-action="Update" method="post" class="d-inline"><input type="hidden" name="id" value="@t.Id" /><input name="name" value="@t.Name" class="form-control form-control-sm d-inline w-auto" data-agent-id="leave-type-edit-name-@t.Id" /><input name="balance" type="number" value="@t.DefaultYearlyBalance" class="form-control form-control-sm d-inline w-auto" data-agent-id="leave-type-edit-balance-@t.Id" /><select name="isActive" class="form-select form-select-sm d-inline w-auto" data-agent-id="leave-type-edit-active-@t.Id"><option value="true" selected="@t.IsActive">Active</option><option value="false" selected="@(!t.IsActive)">Inactive</option></select><button class="btn btn-sm btn-outline-primary" data-agent-id="leave-type-update-@t.Id">Update</button></form>
+</td><td><form asp-action="Delete" method="post"><input type="hidden" name="id" value="@t.Id" /><button class="btn btn-sm btn-outline-danger" data-agent-id="leave-type-delete-@t.Id">Delete</button></form></td></tr>}
+</tbody></table>

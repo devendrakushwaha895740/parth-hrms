@@ -1,0 +1,13 @@
+@model SampleHrms.Web.ViewModels.ApplyLeaveViewModel
+@{ ViewData["Title"] = "Apply for leave"; ViewData["AgentPage"] = "leave-apply"; }
+<h2 data-agent-id="leave-apply-title">Apply for leave</h2>
+<form asp-action="Apply" method="post" data-agent-id="leave-apply-form">
+ <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+ <div class="row">
+  <div class="col-md-3 mb-3"><label asp-for="FromDate" class="form-label"></label><input asp-for="FromDate" type="date" class="form-control" data-agent-id="leave-from-date" /></div>
+  <div class="col-md-3 mb-3"><label asp-for="ToDate" class="form-label"></label><input asp-for="ToDate" type="date" class="form-control" data-agent-id="leave-to-date" /></div>
+  <div class="col-md-3 mb-3"><label asp-for="LeaveTypeId" class="form-label">Leave type</label><select asp-for="LeaveTypeId" asp-items="Model.LeaveTypes" class="form-select" data-agent-id="leave-type"><option value="">Select</option></select></div>
+ </div>
+ <div class="mb-3"><label asp-for="Reason" class="form-label"></label><textarea asp-for="Reason" class="form-control" data-agent-id="leave-reason"></textarea></div>
+ <button type="submit" class="btn btn-primary" data-agent-id="leave-submit">Submit leave request</button>
+</form>

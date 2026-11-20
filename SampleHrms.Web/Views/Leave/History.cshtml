@@ -1,0 +1,9 @@
+@model IEnumerable<SampleHrms.Web.ViewModels.LeaveRequestViewModel>
+@{ ViewData["Title"] = "Leave history"; ViewData["AgentPage"] = "leave-history"; }
+<h2 data-agent-id="leave-history-title">My leave history</h2>
+<table class="table table-striped" data-agent-id="leave-history-table"><thead><tr><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Status</th><th>Comment</th><th></th></tr></thead><tbody>
+@foreach (var r in Model) {
+<tr data-agent-id="leave-history-row-@r.Id"><td>@r.LeaveType</td><td>@r.FromDate:d</td><td>@r.ToDate:d</td><td>@r.Days</td><td>@r.Status</td><td>@r.ReviewComment</td><td>
+@if (r.Status == "Pending") { <form asp-action="Cancel" method="post" class="d-inline"><input type="hidden" name="id" value="@r.Id" /><button class="btn btn-sm btn-outline-secondary" data-agent-id="leave-cancel-@r.Id">Cancel</button></form> }
+</td></tr>}
+</tbody></table>

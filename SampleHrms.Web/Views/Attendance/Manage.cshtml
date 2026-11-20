@@ -1,0 +1,14 @@
+@model IEnumerable<SampleHrms.Web.ViewModels.AttendanceViewModel>
+@{ ViewData["Title"] = "Manage attendance"; ViewData["AgentPage"] = "attendance-manage"; var employees = (IEnumerable<SampleHrms.Web.ViewModels.EmployeeViewModel>)ViewBag.Employees; }
+<h2 data-agent-id="attendance-manage-title">Correct attendance</h2>
+<form asp-action="Manage" method="post" class="row mb-4" data-agent-id="attendance-correct-form">
+ <div class="col-md-3"><select name="userId" class="form-select" data-agent-id="attendance-user"><option value="">Employee</option>@foreach (var e in employees) { <option value="@e.Id">@e.FullName</option> }</select></div>
+ <div class="col-md-2"><input name="date" type="date" class="form-control" data-agent-id="attendance-date" /></div>
+ <div class="col-md-2"><input name="checkIn" type="time" class="form-control" data-agent-id="attendance-check-in" /></div>
+ <div class="col-md-2"><input name="checkOut" type="time" class="form-control" data-agent-id="attendance-check-out" /></div>
+ <div class="col-md-2"><select name="status" class="form-select" data-agent-id="attendance-status"><option>Present</option><option>Absent</option><option>Leave</option><option>Holiday</option></select></div>
+ <div class="col-md-1"><button class="btn btn-primary" data-agent-id="attendance-save">Save</button></div>
+</form>
+<table class="table" data-agent-id="attendance-manage-table"><thead><tr><th>Employee</th><th>Date</th><th>In</th><th>Out</th><th>Status</th></tr></thead><tbody>
+@foreach (var r in Model) { <tr data-agent-id="attendance-manage-row-@r.Id"><td>@r.EmployeeName</td><td>@r.Date:d</td><td>@(r.CheckIn?.ToString(@"hh\:mm"))</td><td>@(r.CheckOut?.ToString(@"hh\:mm"))</td><td>@r.Status</td></tr> }
+</tbody></table>

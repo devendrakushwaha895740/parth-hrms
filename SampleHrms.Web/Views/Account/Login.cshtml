@@ -1,0 +1,15 @@
+@model SampleHrms.Web.ViewModels.LoginViewModel
+@{ ViewData["Title"] = "Login"; ViewData["AgentPage"] = "login"; }
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <h2 data-agent-id="login-title">Sign in</h2>
+    <form asp-action="Login" method="post" data-agent-id="login-form">
+      <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="mb-3"><label asp-for="Email" class="form-label"></label><input asp-for="Email" class="form-control" data-agent-id="login-email" /></div>
+      <div class="mb-3"><label asp-for="Password" class="form-label"></label><input asp-for="Password" class="form-control" data-agent-id="login-password" /></div>
+      <div class="form-check mb-3"><input asp-for="RememberMe" class="form-check-input" data-agent-id="login-remember" /><label asp-for="RememberMe" class="form-check-label"></label></div>
+      <button type="submit" class="btn btn-primary" data-agent-id="login-submit">Login</button>
+    </form>
+  </div>
+</div>

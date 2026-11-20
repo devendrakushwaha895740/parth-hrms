@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>@ViewData["Title"] - Sample HRMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <link rel="stylesheet" href="~/css/assistant.css" asp-append-version="true" />
+    }
+</head>
+<body data-agent-page="@((ViewData["AgentPage"] ?? "unknown"))">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Dashboard" asp-action="Index" data-agent-id="nav-dashboard">Sample HRMS</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Toggle navigation" data-agent-id="nav-toggle">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="mainNav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-controller="Dashboard" asp-action="Index" data-agent-id="nav-dashboard">Dashboard</a></li>
+                            @if (User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Leave" asp-action="Apply" data-agent-id="nav-leave-apply">Apply Leave</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Leave" asp-action="History" data-agent-id="nav-leave-history">Leave History</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Attendance" asp-action="My" data-agent-id="nav-attendance-my">My Attendance</a></li>
+                            }
+                            @if (User.IsInRole("HR") || User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Employees" asp-action="Index" data-agent-id="nav-employees">Employees</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Leave" asp-action="Pending" data-agent-id="nav-leave-pending">Pending Leave</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Leave" asp-action="All" data-agent-id="nav-leave-all">All Leave</a></li>
+                            }
+                            @if (User.IsInRole("HR"))
+                            { <li class="nav-item"><a class="nav-link" asp-controller="Attendance" asp-action="Manage" data-agent-id="nav-attendance-manage">Attendance</a></li> }
+                            @if (User.IsInRole("Admin"))
+                            { <li class="nav-item"><a class="nav-link" asp-controller="LeaveTypes" asp-action="Index" data-agent-id="nav-leave-types">Leave Types</a></li> }
+                        }
+                    </ul>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <span class="navbar-text text-white me-3">@User.Identity.Name</span>
+                        <form asp-controller="Account" asp-action="Logout" method="post">
+                            <button class="btn btn-outline-light btn-sm" type="submit" data-agent-id="nav-logout">Logout</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @if (TempData["Success"] != null)
+            { <div class="alert alert-success" role="alert" data-agent-id="flash-success">@TempData["Success"]</div> }
+            @if (TempData["Error"] != null)
+            { <div class="alert alert-danger" role="alert" data-agent-id="flash-error">@TempData["Error"]</div> }
+            @RenderBody()
+        </main>
+    </div>
+    <div id="ai-assistant-root"></div>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <script src="~/lib/microsoft/signalr/signalr.min.js" asp-append-version="true"></script>
+        <script src="~/js/assistant/orb.js" asp-append-version="true"></script>
+        <script src="~/js/assistant/panel.js" asp-append-version="true"></script>
+        <script src="~/js/assistant/voice.js" asp-append-version="true"></script>
+        <script src="~/js/assistant/assistant.js" asp-append-version="true"></script>
+        <script src="~/js/assistant/executor.js" asp-append-version="true"></script>
+    }
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
